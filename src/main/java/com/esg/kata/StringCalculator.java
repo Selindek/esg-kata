@@ -46,7 +46,7 @@ public class StringCalculator {
     }
     
     var delimiter = delimiters.stream().collect(Collectors.joining("|"));
-    System.err.println("delimiter: "+delimiter);
+    
     var arguments = Arrays.asList(data.split(delimiter));
     
     var negatives = new ArrayList<String>();

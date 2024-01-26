@@ -3,7 +3,6 @@ package com.esg.kata;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,15 +52,8 @@ public class StringCalculatorTest {
 
   @Test()
   public void testNegative() {
-    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-      var v = sc.add("2,-4,3,-5");
-      System.err.println(v);
-    });
-
-    String expectedMessage = "Negatives not allowed: -4,-5";
-    String actualMessage = exception.getMessage();
-
-    assertTrue(actualMessage.contains(expectedMessage));
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> sc.add("2,-4,3,-5"));
+    assertThat(exception.getMessage(),is("Negatives not allowed: -4,-5"));
   }
   
   @Test

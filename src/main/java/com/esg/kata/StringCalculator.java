@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
  */
 public class StringCalculator {
 
+  /**
+   * Add integers in a string. 
+   */
   public int add(String numbers) {
     if(numbers==null) {
       return 0;
@@ -48,6 +51,39 @@ public class StringCalculator {
     var delimiter = delimiters.stream().collect(Collectors.joining("|"));
     
     var arguments = Arrays.asList(data.split(delimiter));
+    
+    var negatives = new ArrayList<String>();
+    var sum = arguments.stream().mapToInt(a->{
+      try {
+        int value = Integer.parseInt(a);
+        if(value>1000) {
+          value = 0;
+        } else if(value<0) {
+          negatives.add(a);
+        }
+        return value;
+      } catch (NumberFormatException ex) {
+        return 0;
+      }
+    }).sum();
+    
+    if(!negatives.isEmpty()) {
+      throw new IllegalArgumentException("Negatives not allowed: "
+          +negatives.stream().collect(Collectors.joining(",")));
+    }
+    
+    return sum;
+  }
+  
+  /**
+   * An alternative generic solution which allows any kind of delimiters except digits and the '-' sign.
+   * It still fulfills all the tests as long as no digits are used as separators.
+   */
+  public int addGeneric(String numbers) {
+    if(numbers==null) {
+      return 0;
+    }
+    var arguments = Arrays.asList(numbers.split("[^0-9-]"));
     
     var negatives = new ArrayList<String>();
     var sum = arguments.stream().mapToInt(a->{
